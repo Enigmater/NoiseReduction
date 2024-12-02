@@ -28,8 +28,6 @@ System::Void NoiseReduction::MyForm::panel_image_Paint(System::Object^ sender, S
     if (image != nullptr) {
         panel_image->Width = image->Width;
         panel_image->Height = image->Height;
-        panel1->Width = image->Width;
-        panel1->Height = image->Height;
         e->Graphics->DrawImage(image, 0, 0, panel_image->ClientSize.Width, panel_image->ClientSize.Height);
     }
 }
@@ -48,8 +46,7 @@ System::Void NoiseReduction::MyForm::button_lines_Click(System::Object^ sender, 
     Graphics^ g = Graphics::FromImage(image);
     Random^ rand = gcnew Random();
     // Добавление линий шума
-    for (int i = 0; i < trackBar_lines->Value; i++) // 100 случайных линий
-    {
+    for (int i = 0; i < trackBar_lines->Value; i++) {
         int x1 = rand->Next(image->Width);
         int y1 = rand->Next(image->Height);
         int x2 = rand->Next(image->Width);
@@ -68,7 +65,7 @@ System::Void NoiseReduction::MyForm::button_circles_Click(System::Object^ sender
     Graphics^ g = Graphics::FromImage(image);
     Random^ rand = gcnew Random();
     // Добавление окружностей шума
-    for (int i = 0; i < 50; i++) // 50 случайных окружностей
+    for (int i = 0; i < trackBar_circles->Value; i++)
     {
         int x = rand->Next(image->Width);
         int y = rand->Next(image->Height);
@@ -190,7 +187,7 @@ System::Void NoiseReduction::MyForm::button_gaussian_Click(System::Object^ sende
     int halfFilterSize = filterSize / 2;
     for (int y = -halfFilterSize; y <= halfFilterSize; y++) {
         for (int x = -halfFilterSize; x <= halfFilterSize; x++) {
-            double value = exp(-(x * x + y * y) / (2 * sigma * sigma)) / (2 * sigma * sigma);
+            double value = exp(-(x * x + y * y) / (2 * sigma * sigma));
             kernel[y + halfFilterSize][x + halfFilterSize] = value;
             kernelSum += value;
         }
@@ -314,7 +311,6 @@ System::Void NoiseReduction::MyForm::button_сontouring_Click(System::Object^ sen
         for (int y = 1; y < height - 1; y++) {
             int gradX = 0, gradY = 0;
 
-            // Применяем фильтр к соседним пикселям
             for (int i = -1; i <= 1; i++) {
                 for (int j = -1; j <= 1; j++) {
                     Color pixelColor = image->GetPixel(x + i, y + j);
@@ -358,8 +354,8 @@ System::Void NoiseReduction::MyForm::button_contLaplas_Click(System::Object^ sen
             int sum = 0;
 
             // Применяем фильтр к соседним пикселям
-            for (int i = -1; i <= 2; i++) {
-                for (int j = -1; j <= 2; j++) {
+            for (int i = -1; i < 2; i++) {
+                for (int j = -1; j < 2; j++) {
                     Color pixelColor = image->GetPixel(x + i, y + j);
                     int Y = (int)(0.299 * pixelColor.R + 0.587 * pixelColor.G + 0.114 * pixelColor.B);
                     sum += Y * kernel[i + 1][j + 1];

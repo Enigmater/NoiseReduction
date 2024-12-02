@@ -38,8 +38,9 @@ namespace NoiseReduction {
 	private: System::Windows::Forms::TrackBar^ trackBar_k;
 	private: System::Windows::Forms::Button^ button_сontouring;
 	private: System::Windows::Forms::Button^ button_contLaplas;
-	private: System::Windows::Forms::Button^ button1;
-	private: System::Windows::Forms::Panel^ panel3;
+	private: System::Windows::Forms::Panel^ panel_image;
+
+
 	private: System::Windows::Forms::TrackBar^ trackBar_points;
 
 
@@ -63,11 +64,11 @@ namespace NoiseReduction {
 				delete components;
 			}
 		}
-	private: System::Windows::Forms::Panel^ panel_image;
+
 	private: System::Windows::Forms::Panel^ panel1;
-	private: System::ComponentModel::BackgroundWorker^ backgroundWorker1;
+
 	private: System::Windows::Forms::Button^ button_openFile;
-	private: System::Windows::Forms::ColorDialog^ colorDialog1;
+
 
 		   /// <summary>
 		   /// Обязательная переменная конструктора.
@@ -81,12 +82,9 @@ namespace NoiseReduction {
 		   /// </summary>
 		   void InitializeComponent(void)
 		   {
-			   this->panel_image = (gcnew System::Windows::Forms::Panel());
 			   this->panel1 = (gcnew System::Windows::Forms::Panel());
 			   this->button_reset = (gcnew System::Windows::Forms::Button());
-			   this->backgroundWorker1 = (gcnew System::ComponentModel::BackgroundWorker());
 			   this->button_openFile = (gcnew System::Windows::Forms::Button());
-			   this->colorDialog1 = (gcnew System::Windows::Forms::ColorDialog());
 			   this->trackBar_points = (gcnew System::Windows::Forms::TrackBar());
 			   this->panel2 = (gcnew System::Windows::Forms::Panel());
 			   this->button_contLaplas = (gcnew System::Windows::Forms::Button());
@@ -108,8 +106,7 @@ namespace NoiseReduction {
 			   this->button_points = (gcnew System::Windows::Forms::Button());
 			   this->trackBar_circles = (gcnew System::Windows::Forms::TrackBar());
 			   this->trackBar_lines = (gcnew System::Windows::Forms::TrackBar());
-			   this->panel3 = (gcnew System::Windows::Forms::Panel());
-			   this->button1 = (gcnew System::Windows::Forms::Button());
+			   this->panel_image = (gcnew System::Windows::Forms::Panel());
 			   this->panel1->SuspendLayout();
 			   (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar_points))->BeginInit();
 			   this->panel2->SuspendLayout();
@@ -120,24 +117,15 @@ namespace NoiseReduction {
 			   (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar_lines))->BeginInit();
 			   this->SuspendLayout();
 			   // 
-			   // panel_image
-			   // 
-			   this->panel_image->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
-			   this->panel_image->Location = System::Drawing::Point(307, 31);
-			   this->panel_image->Name = L"panel_image";
-			   this->panel_image->Size = System::Drawing::Size(545, 653);
-			   this->panel_image->TabIndex = 17;
-			   this->panel_image->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MyForm::panel_image_Paint);
-			   // 
 			   // panel1
 			   // 
-			   this->panel1->Controls->Add(this->button1);
+			   this->panel1->Controls->Add(this->panel_image);
+			   this->panel1->Controls->Add(this->button_openFile);
 			   this->panel1->Controls->Add(this->button_reset);
-			   this->panel1->Controls->Add(this->panel3);
-			   this->panel1->Dock = System::Windows::Forms::DockStyle::Right;
+			   this->panel1->Dock = System::Windows::Forms::DockStyle::Fill;
 			   this->panel1->Location = System::Drawing::Point(302, 0);
 			   this->panel1->Name = L"panel1";
-			   this->panel1->Size = System::Drawing::Size(561, 702);
+			   this->panel1->Size = System::Drawing::Size(741, 723);
 			   this->panel1->TabIndex = 26;
 			   // 
 			   // button_reset
@@ -152,7 +140,7 @@ namespace NoiseReduction {
 			   // 
 			   // button_openFile
 			   // 
-			   this->button_openFile->Location = System::Drawing::Point(307, 2);
+			   this->button_openFile->Location = System::Drawing::Point(9, 2);
 			   this->button_openFile->Name = L"button_openFile";
 			   this->button_openFile->Size = System::Drawing::Size(75, 23);
 			   this->button_openFile->TabIndex = 16;
@@ -196,7 +184,7 @@ namespace NoiseReduction {
 			   this->panel2->Dock = System::Windows::Forms::DockStyle::Left;
 			   this->panel2->Location = System::Drawing::Point(0, 0);
 			   this->panel2->Name = L"panel2";
-			   this->panel2->Size = System::Drawing::Size(302, 702);
+			   this->panel2->Size = System::Drawing::Size(302, 723);
 			   this->panel2->TabIndex = 27;
 			   // 
 			   // button_contLaplas
@@ -391,32 +379,20 @@ namespace NoiseReduction {
 			   this->trackBar_lines->Value = 1;
 			   this->trackBar_lines->Scroll += gcnew System::EventHandler(this, &MyForm::trackBar_lines_Scroll);
 			   // 
-			   // panel3
+			   // panel_image
 			   // 
-			   this->panel3->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
-			   this->panel3->Location = System::Drawing::Point(9, 31);
-			   this->panel3->Name = L"panel3";
-			   this->panel3->Size = System::Drawing::Size(545, 653);
-			   this->panel3->TabIndex = 17;
-			   this->panel3->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MyForm::panel_image_Paint);
-			   // 
-			   // button1
-			   // 
-			   this->button1->Location = System::Drawing::Point(9, 2);
-			   this->button1->Name = L"button1";
-			   this->button1->Size = System::Drawing::Size(75, 23);
-			   this->button1->TabIndex = 16;
-			   this->button1->Text = L"Open Image";
-			   this->button1->UseVisualStyleBackColor = true;
-			   this->button1->Click += gcnew System::EventHandler(this, &MyForm::button_openFile_Click);
+			   this->panel_image->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
+			   this->panel_image->Location = System::Drawing::Point(9, 31);
+			   this->panel_image->Name = L"panel_image";
+			   this->panel_image->Size = System::Drawing::Size(689, 659);
+			   this->panel_image->TabIndex = 17;
+			   this->panel_image->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MyForm::panel_image_Paint);
 			   // 
 			   // MyForm
 			   // 
 			   this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			   this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			   this->ClientSize = System::Drawing::Size(863, 702);
-			   this->Controls->Add(this->button_openFile);
-			   this->Controls->Add(this->panel_image);
+			   this->ClientSize = System::Drawing::Size(1043, 723);
 			   this->Controls->Add(this->panel1);
 			   this->Controls->Add(this->panel2);
 			   this->Name = L"MyForm";
